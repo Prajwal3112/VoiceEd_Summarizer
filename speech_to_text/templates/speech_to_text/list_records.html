@@ -1,0 +1,37 @@
+{% extends 'speech_to_text/base.html' %}
+
+{% block title %}Records{% endblock %}
+
+{% block content %}
+<h2>Recorded Files</h2>
+{% if records %}
+    <table>
+        <thead>
+            <tr>
+                <th>File Name</th>
+                <th>Created At</th>
+                <th>Duration</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for record in records %}
+            <tr>
+                <td>{{ record.file_name }}</td>
+                <td>{{ record.created_at }}</td>
+                <td>{{ record.duration|floatformat:2 }} seconds</td>
+                <td>
+                    {% if record.transcription %}
+                        <a href="{% url 'view_transcription' record.id %}">View Transcription</a>
+                    {% else %}
+                        No transcription available
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% else %}
+    <p>No records found.</p>
+{% endif %}
+{% endblock %}

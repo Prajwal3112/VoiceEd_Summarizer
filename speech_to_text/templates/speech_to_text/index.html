@@ -1,0 +1,33 @@
+{% extends 'speech_to_text/base.html' %}
+
+{% block title %}Voice to Text{% endblock %}
+
+{% block content %}
+    <h2>Voice to Text Conversion</h2>
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit" name="start_recording">Start Recording</button>
+        <button type="submit" name="stop_recording">Stop Recording</button>
+        <button type="submit" name="convert">Convert to Text</button>
+        <button type="submit" name="summarize">Summarize</button>
+    </form>
+
+    {% if text %}
+    <div>
+        <h3>Converted Text:</h3>
+        <p>{{ text }}</p>
+    </div>
+    {% endif %}
+
+    {% if file_content %}
+    <div>
+        <h3>Output File Content:</h3>
+        <pre>{{ file_content }}</pre>
+    </div>
+    {% elif file_content == None %}
+    <div>
+        <h3>Output File Content:</h3>
+        <p>The output.txt file is empty or does not exist.</p>
+    </div>
+    {% endif %}
+{% endblock %}

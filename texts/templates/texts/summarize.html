@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Text Summarizer</title>
+    <!-- Material-UI CSS -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/mui/5.3.3/material.min.css" integrity="sha512-lATi3fdJQ9Z3m0on5lgwhGAlbpeG+/5WUEYx5nYK2+4yXYLvslXa5cmFn1I91RdJEDiP84JrYrL6SX8jo6dq+Q==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- Neumorphism CSS -->
+    <style>
+        body {
+            background-color: #e0e5ec;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif; /* Change font-family to Arial */
+        }
+
+        .container {
+            background: #e0e5ec;
+            border-radius: 20px;
+            box-shadow: 20px 20px 60px #bebebe, -20px -20px 60px #ffffff;
+            padding: 20px;
+            width: 90%; /* Increased width */
+            max-width: 600px; /* Adjusted maximum width */
+        }
+
+        h1, h2 {
+            text-align: center;
+        }
+
+        label {
+            font-weight: bold;
+        }
+
+        textarea#text {
+            width: calc(100% - 20px); /* Adjusted width */
+            padding: 10px;
+            margin-bottom: 20px;
+            border: none;
+            border-radius: 10px;
+            background-color: #f4f4f4;
+            box-shadow: inset 4px 4px 6px #cbced1, inset -6px -6px 10px #ffffff;
+            font-size: 16px;
+            resize: none;
+            outline: none;
+        }
+
+        input[type="submit"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: none;
+            border-radius: 10px;
+            background-color: #4CAF50;
+            color: white;
+            cursor: pointer;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        li {
+            margin-bottom: 10px;
+            background: #f4f4f4;
+            padding: 10px;
+            border-radius: 10px;
+            box-shadow: 4px 4px 6px #cbced1, -6px -6px 10px #ffffff;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Text Summarizer</h1>
+        
+        <form method="post" action="{% url 'summarize' %}">
+            {% csrf_token %}
+            <label for="text">Enter text here:</label><br>
+            <textarea id="text" name="text" rows="10" cols="50">{% if text %}{{ text }}{% endif %}</textarea><br>
+            <input type="submit" value="Summarize">
+        </form>
+
+        {% if warning_message %}
+            <p>{{ warning_message }}</p>
+        {% endif %}
+
+        {% if summary_sentences %}
+            <h2>NOTES</h2>
+            <ul>
+                {% for sentence in summary_sentences %}
+                    <li>{{ sentence }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    </div>
+</body>
+</html>

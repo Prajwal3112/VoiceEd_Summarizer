@@ -1,0 +1,16 @@
+{% extends 'speech_to_text/base.html' %}
+
+{% block title %}Transcription - {{ record.file_name }}{% endblock %}
+
+{% block content %}
+<h2>Transcription for {{ record.file_name }}</h2>
+<p>Created at: {{ record.created_at }}</p>
+<p>Duration: {{ record.duration|floatformat:2 }} seconds</p>
+<h3>Transcription:</h3>
+{% if record.transcription %}
+    <pre>{{ record.transcription }}</pre>
+{% else %}
+    <p>No transcription available for this record.</p>
+{% endif %}
+<a href="{% url 'list_records' %}">Back to list</a>
+{% endblock %}
